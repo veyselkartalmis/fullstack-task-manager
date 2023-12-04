@@ -21,15 +21,11 @@ function Sidebar() {
   return (
     <SidebarStyled theme={theme}>
       <div className="profile">
-        <div className="profile-overlay">
-          <div className="image">
-            <Image src="/profile.jpg" width={70} height={70} alt="profile" />
-          </div>
-          <h1>
-            <span>Veysel</span>
-            <span>Kartalmış</span>
-          </h1>
+        <div className="profile-overlay"></div>
+        <div className="image">
+          <Image width={70} height={70} src="/profile.jpg" alt="profile" />
         </div>
+        <h1 className="capitalize">Veysel Kartalmış</h1>
       </div>
       <ul className="nav-items">
         {menu.map((item) => {
@@ -141,7 +137,7 @@ const SidebarStyled = styled.nav`
     }
 
     h1 {
-      font-size: 1.2rem;
+      font-size: 1rem;
       display: flex;
       flex-direction: column;
 
@@ -172,8 +168,7 @@ const SidebarStyled = styled.nav`
 
     > h1 {
       margin-left: 0.8rem;
-      font-size: clamp(1.2rem, 4vw, 1.4rem);
-      line-height: 100%;
+      font-size: clamp(1.1rem, 4vw, 1.1rem);
     }
 
     &:hover {
