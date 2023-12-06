@@ -28,9 +28,10 @@ function Sidebar() {
         <h1 className="capitalize">Veysel Kartalmış</h1>
       </div>
       <ul className="nav-items">
-        {menu.map((item) => {
+        {menu.map((item, index) => {
           return (
             <li
+              key={index}
               className={`nav-item ${pathname === item.link ? "active" : ""}`}
               onClick={() => {
                 handleClick(item.link);
