@@ -13,8 +13,8 @@ interface Props {
   isCompleted: boolean;
 }
 
-function TaskItem({ title, description, date, isCompleted }: Props) {
-  const { theme } = useGlobalState();
+function TaskItem({ title, description, date, isCompleted, id }: Props) {
+  const { theme, deleteTask } = useGlobalState();
   return (
     <TaskItemStyled theme={theme}>
       <h2>{title}</h2>
@@ -27,7 +27,14 @@ function TaskItem({ title, description, date, isCompleted }: Props) {
           <button className="incomplete">Incomplete</button>
         )}
         <button className="edit">{edit}</button>
-        <button className="delete">{trash}</button>
+        <button
+          className="delete"
+          onClick={() => {
+            deleteTask(id);
+          }}
+        >
+          {trash}
+        </button>
       </div>
     </TaskItemStyled>
   );
