@@ -2,9 +2,10 @@
 
 import { useGlobalState } from "@/app/context/globalProvider";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import styled from "styled-components";
+import Button from "../Button/Button";
 import { add, plus } from "@/app/utils/Icons";
 
 function CreateContent() {
@@ -13,6 +14,8 @@ function CreateContent() {
   const [date, setDate] = useState("");
   const [completed, setCompleted] = useState(false);
   const [important, setImportant] = useState(false);
+
+  const { theme, allTask, closeModal } = useGlobalState();
 
   const handleChange = (name: string) => (e: any) => {
     switch (name) {
@@ -56,6 +59,8 @@ function CreateContent() {
 
       if (!res.data.error) {
         toast.success("Task created successfully.");
+        allTask();
+        closeModal();
       }
     } catch (error) {
       toast.error("Something went wrong.");
@@ -64,7 +69,7 @@ function CreateContent() {
   };
 
   return (
-    <CreateContentStyled onSubmit={handleSubmit}>
+    <CreateContentStyled onSubmit={handleSubmit} theme={theme}>
       <h1>Create a Task</h1>
       <div className="input-control">
         <label htmlFor="title">Title</label>
@@ -120,7 +125,16 @@ function CreateContent() {
       </div>
 
       <div className="submit-btn flex justify-end">
-        <button type="submit">submit</button>
+        <Button
+          type="submit"
+          name="Create Task"
+          icon={add}
+          padding={"0.8rem 2rem"}
+          borderRad={"0.8rem"}
+          fw={"500"}
+          fs={"1.2rem"}
+          background={"rgb(0, 163, 255)"}
+        />
       </div>
     </CreateContentStyled>
   );
@@ -132,7 +146,7 @@ const CreateContentStyled = styled.form`
     font-weight: 600;
   }
 
-  color: ${(props) => props.theme.col};
+  color: ${(props) => props.theme.colorGrey1};
 
   .input-control {
     position: relative;
@@ -160,7 +174,7 @@ const CreateContentStyled = styled.form`
 
       resize: none;
       background-color: ${(props) => props.theme.colorGreyDark};
-      color: black;
+      color: ${(props) => props.theme.colorGrey2};
       border-radius: 0.5rem;
     }
   }
