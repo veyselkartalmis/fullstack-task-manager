@@ -29,15 +29,20 @@ export const GlobalProvider = ({ children }) => {
 
   const allTask = async () => {
     setIsLoading(true);
-
     try {
       const res = await axios.get("/api/tasks");
-      setTasks(res.data);
+
+      const sorted = res.data.sort((a, b) => {
+        return (
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
+      });
+
+      setTasks(sorted);
+
       setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
       console.log(error);
-      toast.error("Something went wrong");
     }
   };
 
