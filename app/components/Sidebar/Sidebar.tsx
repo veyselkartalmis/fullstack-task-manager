@@ -9,11 +9,11 @@ import { usePathname, useRouter } from "next/navigation";
 
 import menu from "@/app/utils/menu";
 import Button from "../Button/Button";
-import { logout } from "@/app/utils/Icons";
+import { arrowLeft, bars, logout } from "@/app/utils/Icons";
 import { UserButton, useClerk, useUser } from "@clerk/nextjs";
 
 function Sidebar() {
-  const { theme } = useGlobalState();
+  const { theme, collapsed, collapseMenu } = useGlobalState();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -32,7 +32,10 @@ function Sidebar() {
   };
 
   return (
-    <SidebarStyled theme={theme}>
+    <SidebarStyled theme={theme} collapsed={collapsed}>
+      <button className="toggle-nav" onClick={collapseMenu}>
+        {collapsed ? bars : arrowLeft}
+      </button>
       <div className="profile">
         <div className="profile-overlay"></div>
         <div className="image">
@@ -80,7 +83,7 @@ function Sidebar() {
   );
 }
 
-const SidebarStyled = styled.nav`
+const SidebarStyled = styled.nav<{ collapsed: boolean }>`
   position: relative;
   width: ${(props) => props.theme.sidebarWidth};
   background-color: ${(props) => props.theme.colorBg2};
@@ -99,6 +102,8 @@ const SidebarStyled = styled.nav`
     z-index: 100;
 
     transition: all 0.3s cubic-bezier(0.53, 0.21, 0, 1);
+    transform: ${(props) =>
+      props.collapsed ? "translateX(-107%)" : "translateX(0)"};
 
     .toggle-nav {
       display: block !important;
@@ -170,7 +175,7 @@ const SidebarStyled = styled.nav`
     }
 
     h1 {
-      font-size: 1rem;
+      font-size: 1.2rem;
       display: flex;
       flex-direction: column;
 
@@ -201,7 +206,8 @@ const SidebarStyled = styled.nav`
 
     > h1 {
       margin-left: 0.8rem;
-      font-size: clamp(1.1rem, 4vw, 1.1rem);
+      font-size: clamp(1.2rem, 4vw, 1.4rem);
+      line-height: 100%;
     }
 
     &:hover {
